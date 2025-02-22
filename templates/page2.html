@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAC | Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e0ffe0;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>RAC Analysis - Legal Advantage</h1>
+    <p>กรุณากรอกเหตุการณ์อุบัติเหตุเพื่อให้เราวิเคราะห์ความได้เปรียบของคุณตามกฎหมายจราจร</p>
+</header>
+
+<div class="content">
+    <h2>ขั้นตอนที่ 1: อธิบายเหตุการณ์อุบัติเหตุ</h2>
+    <p>กรุณาอธิบายเหตุการณ์ เช่น "รถของฉันขับมาทางตรงแล้วถูกรถออกจากซอยชน"</p>
+    <textarea id="accidentDescription" placeholder="กรอกรายละเอียดที่นี่..."></textarea>
+    <button onclick="analyzeAccident()">วิเคราะห์</button>
+
+    <div id="analysisResult" class="result" style="display: none;">
+        <h3>ผลการวิเคราะห์</h3>
+        <p id="advantageResult">กำลังคำนวณ...</p>
+    </div>
+</div>
+
+<script>
+    function analyzeAccident() {
+        // รับข้อมูลเหตุการณ์จากผู้ใช้
+        var description = document.getElementById("accidentDescription").value;
+        
+        // ใช้ NLP เพื่อแยกแยะและวิเคราะห์ข้อความภาษาไทย (สามารถใช้ API หรือโค้ดฝั่งเซิร์ฟเวอร์)
+        var result = "คุณได้เปรียบ 85% ตามกฎหมายที่รถทางตรงมีสิทธิ์ใช้ทางก่อน";
+        
+        // แสดงผลลัพธ์
+        document.getElementById("advantageResult").innerText = result;
+        document.getElementById("analysisResult").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
