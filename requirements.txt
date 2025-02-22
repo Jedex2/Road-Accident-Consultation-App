@@ -1,0 +1,2 @@
+pip install opencv-python flask scikit-learn numpy scipy nltk bayesian-optimization
+pip install transformers
