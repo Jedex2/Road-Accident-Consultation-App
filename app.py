@@ -1,14 +1,14 @@
 # import flast module
 from flask import Flask,render_template, request, jsonify
-from transformers import BertTokenizer, BertForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForMaskedLM
 import torch
+
 # instance of flask application
 app = Flask(__name__)
 
 # โหลดโมเดล BERT ภาษาไทย
-model_name = "bert-base-thai"
-model = BertForSequenceClassification.from_pretrained(model_name)
-tokenizer = BertTokenizer.from_pretrained(model_name)
+model = AutoModelForMaskedLM.from_pretrained("google-bert/bert-base-multilingual-cased")
+tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-multilingual-cased")
 
 # ฟังก์ชันในการประมวลผลข้อความ
 def analyze_accident(description):
@@ -22,18 +22,16 @@ def analyze_accident(description):
 def index():
     return render_template("page1.html")
 
-@app.route("/page2", methods=['POST'])
+@app.route("/page2", methods=['GET', 'POST'])
 def analyze():
-    data = request.get_json()
-    description = data.get('description')
-    if description:
-        result = analyze_accident(description)
-        return jsonify({"result": result})
-    return jsonify({"error": "No description provided"}), 400
-
-@app.route('/page3')
-def owner():
-    return render_template("page3.html")
+    return render_template("page2.html")
+# def analyze():
+#     data = request.get_json()
+#     description = data.get('description')
+#     if description:
+#         result = analyze_accident(description)
+#         return jsonify({"result": result})
+#     return jsonify({"error": "No description provided"}), 400
 
 if __name__ == '__main__':  
-   app.run()  
+   app.run(debug=True)  
