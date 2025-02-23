@@ -1,25 +1,39 @@
-from transformers import pipeline
+from pythainlp.tokenize import word_tokenize
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import make_pipeline
 
-# โหลดโมเดลภาษาไทยที่รองรับการจำแนกข้อความ (Text Classification)
-model_name = "airesearch/wangchanberta-base-att-spm-uncased"
-classifier = pipeline("text-classification", model=model_name, tokenizer=model_name)
+# ตัวอย่างข้อความสำหรับฝึกโมเดล (X = ข้อความ, y = หมวดหมู่)
+train_texts = [
+    "ฉันโดนรถชนท้าย",  
+    "ฉันขับรถชนคนข้ามถนน",
+    "รถของฉันถูกเฉี่ยว",
+    "ฉันเป็นฝ่ายถูกต้อง",
+    "ฉันอาจผิดเพราะเปลี่ยนเลนกระทันหัน"
+]
+train_labels = [
+    "คู่กรณีผิด",  # ข้อความ 1 → คู่กรณีผิด
+    "คุณอาจมีความผิด",  # ข้อความ 2 → ผู้ขับขี่อาจผิด
+    "อุบัติเหตุเล็กน้อย",  # ข้อความ 3 → อุบัติเหตุเล็กน้อย
+    "คุณชนะคดี",  # ข้อความ 4 → ผู้ขับขี่ถูก
+    "คุณอาจแพ้คดี"  # ข้อความ 5 → ผู้ขับขี่อาจแพ้คดี
+]
 
-# ฟังก์ชันวิเคราะห์ข้อความ
-def classify_accident(text):
-    result = classifier(text)
-    label = result[0]["label"]  # ดึงค่าที่โมเดลจำแนกได้
+# Tokenizer แบบภาษาไทย
+def tokenize_thai(text):
+    return word_tokenize(text, engine="newmm")
 
-    # Rule-Based สำหรับกรณีที่แน่ชัด
-    if "ชนท้าย" in text:
-        return "คู่กรณีผิด"
-    elif "ย้อนศร" in text or "ฝ่าไฟแดง" in text:
-        return "คุณผิด"
-    elif label == "positive":
-        return "โอกาสชนะสูง"
-    else:
-        return "กรุณาให้ข้อมูลเพิ่มเติม"
+# สร้าง Pipeline สำหรับทำ Text Classification
+model = make_pipeline(CountVectorizer(tokenizer=tokenize_thai), MultinomialNB())
 
-# ทดสอบระบบ
+# เทรนโมเดล
+model.fit(train_texts, train_labels)
+
+# ทดสอบ Chatbot
+def chatbot_response(text):
+    return model.predict([text])[0]  # ให้โมเดลทำนายหมวดหมู่
+
+# ตัวอย่างการใช้งาน
 user_input = "ฉันโดนรถชนท้าย"
-bot_response = classify_accident(user_input)
-print("Chatbot:", bot_response)
+response = chatbot_response(user_input)
+print("Chatbot:", response)
