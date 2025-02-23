@@ -78,17 +78,32 @@
 
 <script>
     function analyzeAccident() {
-        // รับข้อมูลเหตุการณ์จากผู้ใช้
         var description = document.getElementById("accidentDescription").value;
-        
-        // ใช้ NLP เพื่อแยกแยะและวิเคราะห์ข้อความภาษาไทย (สามารถใช้ API หรือโค้ดฝั่งเซิร์ฟเวอร์)
-        var result = "คุณได้เปรียบ 85% ตามกฎหมายที่รถทางตรงมีสิทธิ์ใช้ทางก่อน";
-        
-        // แสดงผลลัพธ์
-        document.getElementById("advantageResult").innerText = result;
-        document.getElementById("analysisResult").style.display = "block";
+
+        fetch("/page2", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ description: description })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result) {
+                document.getElementById("advantageResult").innerText = data.result;
+            } else {
+                document.getElementById("advantageResult").innerText = "เกิดข้อผิดพลาด กรุณาลองใหม่";
+            }
+            document.getElementById("analysisResult").style.display = "block";
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            document.getElementById("advantageResult").innerText = "เกิดข้อผิดพลาด กรุณาลองใหม่";
+            document.getElementById("analysisResult").style.display = "block";
+        });
     }
 </script>
+
 
 </body>
 </html>

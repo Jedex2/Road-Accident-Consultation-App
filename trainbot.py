@@ -10,6 +10,8 @@ train_texts = [
     "รถของฉันถูกเฉี่ยว",
     "ฉันเป็นฝ่ายถูกต้อง",
     "ฉันอาจผิดเพราะเปลี่ยนเลนกระทันหัน"
+    "ฉันชนคนตาย"
+    "ฉันโดนรถชนข้างรถ"
 ]
 train_labels = [
     "คู่กรณีผิด",  # ข้อความ 1 → คู่กรณีผิด
@@ -34,6 +36,6 @@ def chatbot_response(text):
     return model.predict([text])[0]  # ให้โมเดลทำนายหมวดหมู่
 
 # ตัวอย่างการใช้งาน
-user_input = "ฉันโดนรถชนท้าย"
+user_input = "ฉันโดนรถชนข้างรถ"
 response = chatbot_response(user_input)
 print("Chatbot:", response)
