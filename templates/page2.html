@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAC | Analysis</title>
+    <title>Traffic Accident Analysis</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,7 +20,7 @@
             color: #4CAF50;
         }
         .content {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
@@ -60,19 +60,19 @@
 <body>
 
 <header>
-    <h1>RAC Analysis - Legal Advantage</h1>
-    <p>กรุณากรอกเหตุการณ์อุบัติเหตุเพื่อให้เราวิเคราะห์ความได้เปรียบของคุณตามกฎหมายจราจร</p>
+    <h1>Traffic Accident Analysis</h1>
+    <p>Enter a description of the accident to analyze legal advantages based on traffic rules.</p>
 </header>
 
 <div class="content">
-    <h2>ขั้นตอนที่ 1: อธิบายเหตุการณ์อุบัติเหตุ</h2>
-    <p>กรุณาอธิบายเหตุการณ์ เช่น "รถของฉันขับมาทางตรงแล้วถูกรถออกจากซอยชน"</p>
-    <textarea id="accidentDescription" placeholder="กรอกรายละเอียดที่นี่..."></textarea>
-    <button onclick="analyzeAccident()">วิเคราะห์</button>
+    <h2>Step 1: Describe the Accident</h2>
+    <p>Example: "I was driving straight but was hit by a car exiting an alley."</p>
+    <textarea id="accidentDescription" placeholder="Enter accident details here..."></textarea>
+    <button onclick="analyzeAccident()">Analyze</button>
 
     <div id="analysisResult" class="result" style="display: none;">
-        <h3>ผลการวิเคราะห์</h3>
-        <p id="advantageResult">กำลังคำนวณ...</p>
+        <h3>Analysis Result</h3>
+        <p id="advantageResult">Processing...</p>
     </div>
 </div>
 
@@ -92,18 +92,17 @@
             if (data.result) {
                 document.getElementById("advantageResult").innerText = data.result;
             } else {
-                document.getElementById("advantageResult").innerText = "เกิดข้อผิดพลาด กรุณาลองใหม่";
+                document.getElementById("advantageResult").innerText = "Error occurred. Please try again.";
             }
             document.getElementById("analysisResult").style.display = "block";
         })
         .catch(error => {
             console.error("Error:", error);
-            document.getElementById("advantageResult").innerText = "เกิดข้อผิดพลาด กรุณาลองใหม่";
+            document.getElementById("advantageResult").innerText = "Error occurred. Please try again.";
             document.getElementById("analysisResult").style.display = "block";
         });
     }
 </script>
-
 
 </body>
 </html>
